@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest
-
+from group import Group
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
@@ -25,17 +25,17 @@ class TestAddGroup(unittest.TestCase):
         driver = self.driver
         driver.find_element_by_link_text("groups").click()
 
-    def create_group(self, name, header, footer):
+    def create_group(self, group):
         driver = self.driver
         self.open_groups_page()
         # fill group form
         driver.find_element_by_name("new").click()
         driver.find_element_by_name("group_name").clear()
-        driver.find_element_by_name("group_name").send_keys(name)
+        driver.find_element_by_name("group_name").send_keys(group.name)
         driver.find_element_by_name("group_header").clear()
-        driver.find_element_by_name("group_header").send_keys(header)
+        driver.find_element_by_name("group_header").send_keys(group.header)
         driver.find_element_by_name("group_footer").clear()
-        driver.find_element_by_name("group_footer").send_keys(footer)
+        driver.find_element_by_name("group_footer").send_keys(group.footer)
         driver.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
@@ -50,12 +50,12 @@ class TestAddGroup(unittest.TestCase):
 
     def test_add_group(self):
         self.login(username="admin", password="secret")
-        self.create_group(name="ABC", header="BCA", footer="ZXC")
+        self.create_group(Group(name="ABC", header="BCA", footer="ZXC"))
         self.logout()
 
     def test_add_empty_group(self):
         self.login(username="admin", password="secret")
-        self.create_group(name="", header="", footer="")
+        self.create_group(Group(name="", header="", footer=""))
         self.logout()
 
     def tearDown(self):
