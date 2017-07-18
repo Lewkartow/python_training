@@ -49,6 +49,14 @@ class TestAddGroup(unittest.TestCase):
         self.return_to_groups_page(driver)
         self.logout(driver)
 
+    def test_add_empty_group(self):
+        driver = self.driver
+        self.open_home_page(driver)
+        self.login(driver, username="admin", password="secret")
+        self.open_groups_page(driver)
+        self.create_group(driver, name="", header="", footer="")
+        self.return_to_groups_page(driver)
+        self.logout(driver)
 
     def tearDown(self):
         self.driver.quit()
