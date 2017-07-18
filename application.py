@@ -1,7 +1,7 @@
 from selenium import webdriver
 import unittest
 
-class Aplication:
+class Application:
 
     def __init__(self):
         self.driver = webdriver.Firefox()
