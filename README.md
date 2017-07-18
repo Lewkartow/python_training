@@ -1,2 +1,2 @@
 # python_training
-Second try
+Second try. Repository for training
