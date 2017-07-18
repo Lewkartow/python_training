@@ -12,6 +12,7 @@ class TestAddGroup(unittest.TestCase):
           driver.get("http://localhost/addressbook/")
 
     def login(self, driver, username, password):
+        self.open_home_page(driver)
         driver.find_element_by_name("user").clear()
         driver.find_element_by_name("user").send_keys(username)
         driver.find_element_by_name("pass").clear()
@@ -22,6 +23,7 @@ class TestAddGroup(unittest.TestCase):
         driver.find_element_by_link_text("groups").click()
 
     def create_group(self, driver, name, header, footer):
+        self.open_groups_page(driver)
         # fill group form
         driver.find_element_by_name("new").click()
         driver.find_element_by_name("group_name").clear()
@@ -31,6 +33,7 @@ class TestAddGroup(unittest.TestCase):
         driver.find_element_by_name("group_footer").clear()
         driver.find_element_by_name("group_footer").send_keys(footer)
         driver.find_element_by_name("submit").click()
+        self.return_to_groups_page(driver)
 
     def return_to_groups_page(self, driver):
         driver.find_element_by_link_text("groups").click()
@@ -39,23 +42,16 @@ class TestAddGroup(unittest.TestCase):
         # logout
         driver.find_element_by_link_text("Logout").click()
 
-
     def test_add_group(self):
         driver = self.driver
-        self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
-        self.open_groups_page(driver)
         self.create_group(driver, name="ABC", header="BCA", footer="ZXC")
-        self.return_to_groups_page(driver)
         self.logout(driver)
 
     def test_add_empty_group(self):
         driver = self.driver
-        self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
-        self.open_groups_page(driver)
         self.create_group(driver, name="", header="", footer="")
-        self.return_to_groups_page(driver)
         self.logout(driver)
 
     def tearDown(self):
