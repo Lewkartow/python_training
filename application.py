@@ -1,5 +1,5 @@
 from selenium import webdriver
-import unittest
+
 
 class Application:
 
@@ -14,8 +14,10 @@ class Application:
     def login(self, username, password):
         driver = self.driver
         self.open_home_page(driver)
+        driver.find_element_by_name("user").click()
         driver.find_element_by_name("user").clear()
         driver.find_element_by_name("user").send_keys(username)
+        driver.find_element_by_name("pass").click()
         driver.find_element_by_name("pass").clear()
         driver.find_element_by_name("pass").send_keys(password)
         driver.find_element_by_css_selector("input[type=\"submit\"]").click()
@@ -24,17 +26,18 @@ class Application:
         driver = self.driver
         driver.find_element_by_link_text("groups").click()
 
-    def create_group(self, name, header, footer):
+    def create_group(self, Group):
         driver = self.driver
         self.open_groups_page()
-        # fill group form
+        #init group creation
         driver.find_element_by_name("new").click()
+        # fill group form
         driver.find_element_by_name("group_name").clear()
-        driver.find_element_by_name("group_name").send_keys(name)
+        driver.find_element_by_name("group_name").send_keys(Group.name)
         driver.find_element_by_name("group_header").clear()
-        driver.find_element_by_name("group_header").send_keys(header)
+        driver.find_element_by_name("group_header").send_keys(Group.header)
         driver.find_element_by_name("group_footer").clear()
-        driver.find_element_by_name("group_footer").send_keys(footer)
+        driver.find_element_by_name("group_footer").send_keys(Group.footer)
         driver.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
@@ -43,7 +46,6 @@ class Application:
         driver.find_element_by_link_text("groups").click()
 
     def logout(self):
-        # logout
         driver = self.driver
         driver.find_element_by_link_text("Logout").click()
 
