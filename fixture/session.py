@@ -20,3 +20,12 @@ class SessionHelper:
     def logout(self):
         driver = self.app.driver
         driver.find_element_by_link_text("Logout").click()
+
+    def if_not_logout(self):
+        driver = self.app.driver
+        if driver.find_element_by_link_text("Logout") is True:
+            driver.find_element_by_link_text("Logout").click()
+        else:
+            pass
+
+
