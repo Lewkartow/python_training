@@ -11,19 +11,17 @@ def app(request):
     global fixture
     if fixture is None:
          fixture = Application()
-         fixture.session.login(username="admin", password="secret")
     else:
-        pass
-        """ if not fixture.is_valid():
+         if fixture.is_valid(): # returning false. Why? Now bork
             fixture = Application()
             fixture.session.login(username="admin", password="secret")
-            """
+    fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
-        fixture.session.logout()
+        fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)
     return fixture
