@@ -9,6 +9,8 @@ class GroupHelper:
 
     def open_groups_page(self):
         driver = self.app.driver
+        if (driver.current_url.endswith("/group.php")) and (len(driver.find_elements_by_name("New"))) > 0:
+            return
         driver.find_element_by_link_text("groups").click()
 
     def change_field_value(self, field_name, text):
