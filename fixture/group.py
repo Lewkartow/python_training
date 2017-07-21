@@ -48,6 +48,7 @@ class GroupHelper:
 
     def delete_first_group(self, index):
         self.delete_group_by_index(0)
+        self.group_cache = None
 
     def delete_group_by_index(self, index):
         driver = self.app.driver
